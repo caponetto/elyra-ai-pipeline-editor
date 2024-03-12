@@ -27,7 +27,7 @@ const deleteAppdataField = (node: any, fieldName: string): void => {
 const renameAppdataField = (
   node: any,
   currentFieldName: string,
-  newFieldName: string
+  newFieldName: string,
 ): void => {
   if (hasAppdataField(node, currentFieldName)) {
     node.app_data[newFieldName] = node.app_data[currentFieldName];
@@ -55,7 +55,7 @@ function migrate(pipeline: any) {
     renameAppdataField(
       node,
       "recursive_dependencies",
-      "include_subdirectories"
+      "include_subdirectories",
     );
   }
 

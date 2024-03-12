@@ -16,9 +16,9 @@
 
 import produce from "immer";
 
+import rawMigrate from "./";
 import { ComponentNotFoundError } from "../errors";
 import { mockPaletteV7 } from "../utils";
-import rawMigrate from "./";
 
 // wrap migrate functions in immer
 const migrate = produce<any>((f: any, p: any) => rawMigrate(f, p));
@@ -46,7 +46,7 @@ it("should update old op name to new op name", () => {
 
   const actual = migrate(v5, mockPaletteV7);
   expect(actual.pipelines[0].nodes[0].op).toBe(
-    "elyra-kfp-examples-catalog:61e6f4141f65"
+    "elyra-kfp-examples-catalog:61e6f4141f65",
   );
 });
 
@@ -71,7 +71,7 @@ it("should not update op name if already new op name", () => {
 
   const actual = migrate(v5, mockPaletteV7);
   expect(actual.pipelines[0].nodes[0].op).toBe(
-    "elyra-airflow-examples-catalog:3a55d015ea96"
+    "elyra-airflow-examples-catalog:3a55d015ea96",
   );
 });
 
@@ -214,7 +214,7 @@ it("should update component_source to new format", () => {
 
   const actual = migrate(v5, mockPaletteV7);
   expect(actual.pipelines[0].nodes[0].app_data.component_source).toBe(
-    '{"catalog_type":"elyra-kfp-examples-catalog","component_ref":{"component-id":"component_source.py"}}'
+    '{"catalog_type":"elyra-kfp-examples-catalog","component_ref":{"component-id":"component_source.py"}}',
   );
 });
 
@@ -241,7 +241,7 @@ it("should update component_source to new format with generic filename", () => {
 
   const actual = migrate(v5, mockPaletteV7);
   expect(actual.pipelines[0].nodes[0].app_data.component_source).toBe(
-    '{"catalog_type":"elyra-kfp-examples-catalog","component_ref":{"component-id":"download_data.yaml"}}'
+    '{"catalog_type":"elyra-kfp-examples-catalog","component_ref":{"component-id":"download_data.yaml"}}',
   );
 });
 
@@ -268,7 +268,7 @@ it("should not update component_source if op is not updated", () => {
 
   const actual = migrate(v5, mockPaletteV7);
   expect(actual.pipelines[0].nodes[0].app_data.component_source).toBe(
-    "some/path/to/component_source.py"
+    "some/path/to/component_source.py",
   );
 });
 
@@ -343,7 +343,7 @@ it("should update property format for OneOfControl", () => {
 
   const actual = migrate(v5, mockPaletteV7);
   expect(actual.pipelines[0].nodes[0].app_data.component_parameters).toEqual(
-    new_component_parameters
+    new_component_parameters,
   );
 });
 
@@ -381,6 +381,6 @@ it("should not update property format for kfp controls", () => {
 
   const actual = migrate(v5, mockPaletteV7);
   expect(actual.pipelines[0].nodes[0].app_data.component_parameters).toEqual(
-    component_parameters
+    component_parameters,
   );
 });

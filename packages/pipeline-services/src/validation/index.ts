@@ -117,7 +117,7 @@ export function getPipelineProblems(pipeline: any, pipelineProperties: any) {
     const value = getValue(
       pipeline.app_data?.properties,
       fieldName,
-      pipeline.app_data?.properties?.pipeline_defaults
+      pipeline.app_data?.properties?.pipeline_defaults,
     );
     if (prop.data?.required && !value) {
       problems.push({
@@ -192,7 +192,7 @@ export function getNodeProblems(pipeline: any, nodeDefinitions: any) {
       const value = getValue(
         node.app_data.component_parameters ?? {},
         fieldName,
-        pipeline.app_data?.properties?.pipeline_defaults
+        pipeline.app_data?.properties?.pipeline_defaults,
       );
       const component_parameters =
         nodeDef.app_data.properties?.properties?.component_parameters ?? {};
@@ -236,7 +236,7 @@ export function getNodeProblems(pipeline: any, nodeDefinitions: any) {
 export function validate(
   pipeline: string,
   nodeDefinitions: any,
-  pipelineProperties?: any
+  pipelineProperties?: any,
 ) {
   const pipelineTreeRoot = parseTree(pipeline);
   if (pipelineTreeRoot === undefined) {
@@ -267,7 +267,7 @@ export function validate(
           severity: 1 as 1 | 2 | 3 | 4 | undefined,
           range: rangeForLocation(location),
         };
-      })
+      }),
     );
   }
 

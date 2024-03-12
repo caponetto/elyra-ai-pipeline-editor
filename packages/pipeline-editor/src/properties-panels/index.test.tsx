@@ -14,9 +14,12 @@
  * limitations under the License.
  */
 
+import { act } from "react";
+
 import userEvent from "@testing-library/user-event";
 import { IntlProvider } from "react-intl";
 
+import NodeProperties from "./NodeProperties";
 import {
   render,
   screen,
@@ -24,50 +27,49 @@ import {
   selectedNode,
   createPalette,
 } from "../test-utils";
-import NodeProperties from "./NodeProperties";
 
 const nodes = createPalette([nodeSpec]).categories![0].node_types![0];
 
 it("renders with undefined nodes selected", () => {
   const { container } = render(<NodeProperties nodes={[]} />);
   expect(container.firstChild).toHaveTextContent(
-    /select a node to edit its properties/i
+    /select a node to edit its properties/i,
   );
 });
 
 it("renders with no nodes selected", () => {
   const { container } = render(
-    <NodeProperties nodes={[]} selectedNodes={[]} />
+    <NodeProperties nodes={[]} selectedNodes={[]} />,
   );
   expect(container.firstChild).toHaveTextContent(
-    /select a node to edit its properties/i
+    /select a node to edit its properties/i,
   );
 });
 
 it("renders with multiple nodes selected", () => {
   const { container } = render(
-    <NodeProperties nodes={[]} selectedNodes={[{}, {}]} />
+    <NodeProperties nodes={[]} selectedNodes={[{}, {}]} />,
   );
   expect(container.firstChild).toHaveTextContent(
-    /multiple nodes are selected/i
+    /multiple nodes are selected/i,
   );
 });
 
 it("renders with supernode selected", () => {
   const { container } = render(
-    <NodeProperties nodes={[]} selectedNodes={[{ type: "super_node" }]} />
+    <NodeProperties nodes={[]} selectedNodes={[{ type: "super_node" }]} />,
   );
   expect(container.firstChild).toHaveTextContent(
-    /this node type doesn't have any editable properties/i
+    /this node type doesn't have any editable properties/i,
   );
 });
 
 it("renders if selected node op isn't defined in schema", () => {
   const { container } = render(
-    <NodeProperties nodes={[]} selectedNodes={[selectedNode]} />
+    <NodeProperties nodes={[]} selectedNodes={[selectedNode]} />,
   );
   expect(container.firstChild).toHaveTextContent(
-    /This node uses a component that is not stored in your component registry/i
+    /This node uses a component that is not stored in your component registry/i,
   );
 });
 
@@ -75,7 +77,7 @@ it("renders common properties with one node selected", () => {
   render(
     <IntlProvider locale="en">
       <NodeProperties nodes={[nodes]} selectedNodes={[selectedNode]} />
-    </IntlProvider>
+    </IntlProvider>,
   );
   expect(screen.getByText(/notebook label/i)).toBeInTheDocument();
 });
@@ -89,9 +91,11 @@ it("calls onFileRequested when a browse button is pressed", async () => {
         selectedNodes={[selectedNode]}
         onFileRequested={handleFileRequested}
       />
-    </IntlProvider>
+    </IntlProvider>,
   );
-  userEvent.click(screen.getByText(/browse/i));
+  act(() => {
+    userEvent.click(screen.getByText(/browse/i));
+  });
   expect(handleFileRequested).toHaveBeenCalledTimes(1);
   expect(handleFileRequested).toHaveBeenCalledWith({
     canSelectMany: false,
@@ -106,9 +110,11 @@ it("doesn't crash when a browse button is pressed and onFileRequested is undefin
   render(
     <IntlProvider locale="en">
       <NodeProperties nodes={[nodes]} selectedNodes={[selectedNode]} />
-    </IntlProvider>
+    </IntlProvider>,
   );
-  userEvent.click(screen.getByText(/browse/i));
+  act(() => {
+    userEvent.click(screen.getByText(/browse/i));
+  });
 });
 
 it("calls onChange when a field changes", async () => {
@@ -120,10 +126,12 @@ it("calls onChange when a field changes", async () => {
         selectedNodes={[selectedNode]}
         onChange={handleChange}
       />
-    </IntlProvider>
+    </IntlProvider>,
   );
   // UPDATE_PROPERTY is triggered on mount sometimes?
   const initialCalls = handleChange.mock.calls.length;
-  userEvent.click(screen.getByRole("checkbox"));
+  act(() => {
+    userEvent.click(screen.getByRole("checkbox"));
+  });
   expect(handleChange).toHaveBeenCalledTimes(initialCalls + 1);
 });

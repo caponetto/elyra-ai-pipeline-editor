@@ -15,8 +15,9 @@
  */
 
 import { useCallback } from "react";
-import ReactDOM from "react-dom";
 
+import { NodeType } from "@elyra/canvas";
+import { createRoot } from "react-dom/client";
 import styled from "styled-components";
 
 interface NodeProps {
@@ -24,7 +25,7 @@ interface NodeProps {
   label: string;
 }
 
-export function Node({ image, label }: NodeProps) {
+export function Node(props: NodeProps) {
   return (
     <svg className="svg-area" width="172px" height="35px" x="0" y="0">
       <g className="d3-canvas-group">
@@ -36,7 +37,7 @@ export function Node({ image, label }: NodeProps) {
             />
             <image
               className="node-image"
-              xlinkHref={image}
+              xlinkHref={props.image}
               x="12.5"
               y="0"
               width="16"
@@ -50,7 +51,7 @@ export function Node({ image, label }: NodeProps) {
               className="d3-foreign-object"
             >
               <div className="d3-node-label  d3-node-label-single-line">
-                <span>{label}</span>
+                <span>{props.label}</span>
               </div>
             </foreignObject>
             <circle className="d3-node-port-input" r="3" cx="0" cy="17.5" />
@@ -93,38 +94,44 @@ const Label = styled.div`
 `;
 
 interface Props {
-  nodes: {
-    op: string;
-    app_data: {
-      ui_data?: {
-        label?: string;
-        image?: string;
-      };
-    };
-  }[];
+  nodes: NodeType[];
 }
 
 function PalettePanel({ nodes }: Props) {
-  const handleDragStart = useCallback((e, node) => {
-    const evData = {
-      operation: "addToCanvas",
-      data: {
-        editType: "createExternalNode",
-        nodeTemplate: {
-          op: node.op,
+  const handleDragStart = useCallback(
+    (e: React.DragEvent<HTMLDivElement>, node: NodeType) => {
+      if (!node.app_data.ui_data?.image || !node.app_data.ui_data?.label) {
+        return;
+      }
+      const evData = {
+        operation: "addToCanvas",
+        data: {
+          editType: "createExternalNode",
+          nodeTemplate: {
+            op: node.op,
+          },
         },
-      },
-    };
+      };
 
-    const nodeGhost = document.createElement("div");
-    nodeGhost.style.position = "absolute";
-    nodeGhost.style.top = "-100px";
-    document.body.appendChild(nodeGhost);
-    ReactDOM.render(<Node {...node} />, nodeGhost);
+      const nodeGhost = document.createElement("div");
+      nodeGhost.style.position = "absolute";
+      nodeGhost.style.top = "-100px";
+      document.body.appendChild(nodeGhost);
 
-    e.dataTransfer.setDragImage(nodeGhost, 86, 20);
-    e.dataTransfer.setData("text", JSON.stringify(evData));
-  }, []);
+      // Use ReactDOM.createRoot for rendering
+      const root = createRoot(nodeGhost);
+      root.render(
+        <Node
+          image={node.app_data.ui_data.image}
+          label={node.app_data.ui_data.label}
+        />,
+      );
+
+      e.dataTransfer.setDragImage(nodeGhost, 86, 20);
+      e.dataTransfer.setData("text", JSON.stringify(evData));
+    },
+    [],
+  );
 
   return (
     <Container>

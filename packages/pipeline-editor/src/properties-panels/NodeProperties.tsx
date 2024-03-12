@@ -114,11 +114,11 @@ function NodeProperties({
     const messageBody: Array<any> = [];
     try {
       const componentSourceJson = JSON.parse(
-        selectedNode.app_data.component_source
+        selectedNode.app_data.component_source,
       );
       messageBody.push(`catalog_type: ${componentSourceJson.catalog_type}`);
       for (const [key, value] of Object.entries(
-        componentSourceJson.component_ref
+        componentSourceJson.component_ref,
       )) {
         messageBody.push(`${key}: ${value}`);
       }
@@ -181,7 +181,7 @@ function NodeProperties({
           const oneOfValue = getOneOfValue(
             upstreamNode.id,
             prop,
-            `${upstreamNode.app_data?.ui_data?.label}: ${properties.title}`
+            `${upstreamNode.app_data?.ui_data?.label}: ${properties.title}`,
           );
           oneOfValues.push(oneOfValue);
           oneOfValuesNoOpt.push(oneOfValue);
@@ -193,8 +193,8 @@ function NodeProperties({
           getOneOfValue(
             upstreamNode.id,
             "",
-            upstreamNode.app_data?.ui_data?.label
-          )
+            upstreamNode.app_data?.ui_data?.label,
+          ),
         );
       }
     }
@@ -264,9 +264,8 @@ function NodeProperties({
                 component_properties[prop].oneOf[i].properties.widget.default;
               if (widget === "inputpath") {
                 if (nestedOneOf.length > 0) {
-                  component_properties[prop].oneOf[
-                    i
-                  ].properties.value.oneOf = nestedOneOf;
+                  component_properties[prop].oneOf[i].properties.value.oneOf =
+                    nestedOneOf;
                   delete component_properties[prop].oneOf[i].properties.value
                     .type;
                   delete component_properties[prop].oneOf[i].properties.value
@@ -281,14 +280,13 @@ function NodeProperties({
                   component_properties[prop].oneOf[i].uihints.value[
                     "ui:typefilter"
                   ];
-                component_properties[prop].oneOf[
-                  i
-                ].properties.value.enum = parameters
-                  ?.filter(
-                    (param) =>
-                      param.name !== "" && param.default_value?.type === type
-                  )
-                  ?.map((param) => param.name);
+                component_properties[prop].oneOf[i].properties.value.enum =
+                  parameters
+                    ?.filter(
+                      (param) =>
+                        param.name !== "" && param.default_value?.type === type,
+                    )
+                    ?.map((param) => param.name);
                 component_properties[prop].oneOf[
                   i
                 ].properties.value.enum.unshift("");
@@ -304,7 +302,7 @@ function NodeProperties({
             }
           }
         }
-      }
+      },
     );
   };
 

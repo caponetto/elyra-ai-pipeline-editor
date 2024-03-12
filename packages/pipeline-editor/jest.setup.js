@@ -24,6 +24,10 @@ global.crypto = {
   },
 };
 
+global.clearImmediate = global.clearImmediate || ((id) => clearTimeout(id));
+global.setImmediate =
+  global.setImmediate || ((fn, ...args) => setTimeout(fn, 0, ...args));
+
 window.matchMedia = () => {
   return {
     matches: true,

@@ -67,7 +67,7 @@ function migrate(pipelineFlow: any, palette: any) {
         const catalog_type = opParts[0];
         const component_ref: { [key: string]: any } = {};
         component_ref["component-id"] = path.basename(
-          node.app_data.component_source
+          node.app_data.component_source,
         );
         // handle the two cases where the filename changed
         if (component_ref["component-id"] === "component.yaml") {
@@ -91,7 +91,7 @@ function migrate(pipelineFlow: any, palette: any) {
           pipelineFlow.pipelines[0].app_data.runtime_type === "APACHE_AIRFLOW"
         ) {
           const nodePropertiesSchema = paletteNodes.find(
-            (n: any) => n.op === node.op
+            (n: any) => n.op === node.op,
           );
           if (nodePropertiesSchema === undefined) {
             throw new ComponentNotFoundError();
@@ -101,19 +101,19 @@ function migrate(pipelineFlow: any, palette: any) {
           Object.keys(node.app_data.component_parameters ?? {}).forEach(
             (key) => {
               const propDef = propertyDefs.find(
-                (p: any) => p.parameter_ref === "elyra_" + key
+                (p: any) => p.parameter_ref === "elyra_" + key,
               );
               if (propDef?.custom_control_id === "OneOfControl") {
                 const activeControl: string =
                   Object.keys(propDef.data.controls).find(
-                    (c: string) => c !== "NestedEnumControl"
+                    (c: string) => c !== "NestedEnumControl",
                   ) || "";
                 node.app_data.component_parameters[key] = {
                   activeControl,
                   [activeControl]: node.app_data.component_parameters[key],
                 };
               }
-            }
+            },
           );
         }
       }

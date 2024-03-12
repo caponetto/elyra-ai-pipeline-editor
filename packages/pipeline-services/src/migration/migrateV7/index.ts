@@ -34,7 +34,7 @@ function migrate(pipelineFlow: any, palette: any) {
         if (validOps.includes(node.op)) {
           // update format of inputvalue properties to using OneOfControl format
           const nodePropertiesSchema = paletteNodes.find(
-            (n: any) => n.op === node.op
+            (n: any) => n.op === node.op,
           );
           if (nodePropertiesSchema === undefined) {
             throw new ComponentNotFoundError();
@@ -44,19 +44,19 @@ function migrate(pipelineFlow: any, palette: any) {
           Object.keys(node.app_data.component_parameters ?? {}).forEach(
             (key) => {
               const propDef = propertyDefs.find(
-                (p: any) => p.parameter_ref === "elyra_" + key
+                (p: any) => p.parameter_ref === "elyra_" + key,
               );
               if (propDef?.custom_control_id === "OneOfControl") {
                 const activeControl: string =
                   Object.keys(propDef.data.controls).find(
-                    (c: string) => c !== "NestedEnumControl"
+                    (c: string) => c !== "NestedEnumControl",
                   ) || "";
                 node.app_data.component_parameters[key] = {
                   activeControl,
                   [activeControl]: node.app_data.component_parameters[key],
                 };
               }
-            }
+            },
           );
         }
       }

@@ -101,7 +101,7 @@ it("should update property format for OneOfControl", () => {
 
   const actual = migrate(v7);
   expect(actual.pipelines[0].nodes[0].app_data.component_parameters).toEqual(
-    new_component_parameters
+    new_component_parameters,
   );
 });
 
@@ -210,9 +210,9 @@ it("should update property format for KeyValue arrays", () => {
 
   const actual = migrate(v7);
   expect(actual.pipelines[0].nodes[0].app_data.component_parameters).toEqual(
-    new_component_parameters
+    new_component_parameters,
   );
   expect(actual.pipelines[0].app_data.properties.pipeline_defaults).toEqual(
-    new_component_parameters
+    new_component_parameters,
   );
 });

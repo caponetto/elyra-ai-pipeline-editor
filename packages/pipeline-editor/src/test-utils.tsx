@@ -15,7 +15,7 @@
  */
 
 import { PaletteV3 } from "@elyra/canvas";
-import { render as rtlRender } from "@testing-library/react";
+import { render as rtlRender, RenderResult } from "@testing-library/react";
 
 import { PIPELINE_CURRENT_VERSION } from "./PipelineController";
 import { InternalThemeProvider } from "./ThemeProvider";
@@ -181,8 +181,7 @@ export const nodeSpec: CustomNodeSpecification = {
           include_subdirectories: {
             type: "boolean",
             title: "Include Subdirectories",
-            data:
-              "Whether or not to include recursively include subdirectories when submitting a pipeline (This may increase submission time).",
+            data: "Whether or not to include recursively include subdirectories when submitting a pipeline (This may increase submission time).",
           },
           env_vars: {
             title: "Environment Variables",
@@ -445,9 +444,9 @@ function createPalette(nodes: CustomNodeSpecification[]): PaletteV3 {
 
 function render(
   ui: Parameters<typeof rtlRender>[0],
-  renderOptions?: Parameters<typeof rtlRender>[1]
-) {
-  const Wrapper: React.FC = ({ children }) => {
+  renderOptions?: Parameters<typeof rtlRender>[1],
+): RenderResult {
+  const Wrapper: React.FC<{ children: React.ReactNode }> = ({ children }) => {
     return <InternalThemeProvider>{children}</InternalThemeProvider>;
   };
 

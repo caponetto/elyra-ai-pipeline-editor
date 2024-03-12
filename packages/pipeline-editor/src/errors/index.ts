@@ -18,7 +18,7 @@ export class ElyraOutOfDateError extends Error {
   constructor() {
     /* istanbul ignore next */
     super(
-      "Pipeline was last edited in a newer version of Elyra. Update Elyra to use this pipeline."
+      "Pipeline was last edited in a newer version of Elyra. Update Elyra to use this pipeline.",
     );
   }
 }

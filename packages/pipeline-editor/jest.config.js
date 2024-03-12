@@ -14,11 +14,11 @@
  * limitations under the License.
  */
 
-const baseConfig = require("../../jest.config.base");
+const baseConfig = require("../../jest.config.base.js");
 
 module.exports = {
   ...baseConfig,
-  testEnvironment: "jest-environment-jsdom",
+  testEnvironment: "jsdom",
   setupFilesAfterEnv: [
     "@testing-library/jest-dom/extend-expect",
     "./jest.setup.js",

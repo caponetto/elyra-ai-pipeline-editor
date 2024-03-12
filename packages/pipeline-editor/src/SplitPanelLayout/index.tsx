@@ -132,7 +132,7 @@ function RightPanel({
 
 function SplitPanelLayout({ left, right, mode }: Props) {
   const [dragPosition, setDragPosition] = useState<number | undefined>(
-    undefined
+    undefined,
   );
 
   const [isActive, setIsActive] = useState(false);
@@ -146,7 +146,7 @@ function SplitPanelLayout({ left, right, mode }: Props) {
         const rawPanelWidth = document.body.clientWidth - clientX;
         const panelWidth = Math.max(
           Math.min(document.body.clientWidth - MIN_PANEL_WIDTH, rawPanelWidth),
-          MIN_PANEL_WIDTH
+          MIN_PANEL_WIDTH,
         );
         setDragPosition(panelWidth);
       }
@@ -171,7 +171,7 @@ function SplitPanelLayout({ left, right, mode }: Props) {
     setIsActive(true);
   }, []);
 
-  const width = mode === "open" ? dragPosition ?? DEFAULT_PANEL_WIDTH : 0;
+  const width = mode === "open" ? (dragPosition ?? DEFAULT_PANEL_WIDTH) : 0;
 
   return (
     <React.Fragment>
