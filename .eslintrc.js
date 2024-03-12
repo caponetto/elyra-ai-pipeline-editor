@@ -108,6 +108,12 @@ module.exports = {
       },
     },
     {
+      files: ["**/jest.setup.js"],
+      rules: {
+        "import/no-extraneous-dependencies": "off",
+      },
+    },
+    {
       files: [
         "webpack.*.js",
         "*.test.{ts,tsx}",

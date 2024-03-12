@@ -16,7 +16,7 @@
 
 import { createTheme } from "@elyra/pipeline-editor";
 
-const SvgIcon: React.FC = ({ children }) => {
+const SvgIcon: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   return (
     <svg
       width="16"

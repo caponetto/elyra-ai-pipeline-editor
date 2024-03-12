@@ -14,8 +14,8 @@
  * limitations under the License.
  */
 
-import { fireEvent, render, screen } from "../test-utils";
 import SplitPanelLayout from "./";
+import { fireEvent, render, screen } from "../test-utils";
 
 it("renders only left panel when closed", () => {
   render(
@@ -23,7 +23,7 @@ it("renders only left panel when closed", () => {
       left={<div>left panel</div>}
       right={<div>right panel</div>}
       mode="closed"
-    />
+    />,
   );
 
   expect(screen.getByText(/left panel/i)).toBeInTheDocument();
@@ -36,7 +36,7 @@ it("renders both panels when open", () => {
       left={<div>left panel</div>}
       right={<div>right panel</div>}
       mode="open"
-    />
+    />,
   );
 
   expect(screen.getByText(/left panel/i)).toBeInTheDocument();
@@ -49,7 +49,7 @@ it("renders both panels when collapsed", () => {
       left={<div>left panel</div>}
       right={<div>right panel</div>}
       mode="collapsed"
-    />
+    />,
   );
 
   expect(screen.getByText(/left panel/i)).toBeInTheDocument();
@@ -62,7 +62,7 @@ it("should adjust width when dragged", () => {
       left={<div>left panel</div>}
       right={<div>right panel</div>}
       mode="open"
-    />
+    />,
   );
 
   const before = screen.getByTestId("drag-handle").style.right;
@@ -82,7 +82,7 @@ it("should not adjust width when handle has not been clicked", () => {
       left={<div>left panel</div>}
       right={<div>right panel</div>}
       mode="open"
-    />
+    />,
   );
 
   const before = screen.getByTestId("drag-handle").style.right;

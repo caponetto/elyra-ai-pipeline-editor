@@ -44,7 +44,7 @@ export function nestedToPrefixed(app_data: { [key: string]: any }) {
 
 export function prefixedToNested(
   current_parameters: { [key: string]: any },
-  pipelineDefaults?: boolean
+  pipelineDefaults?: boolean,
 ) {
   let app_data: any = pipelineDefaults
     ? {

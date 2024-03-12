@@ -3,15 +3,36 @@
   "version": "0.0.0",
   "private": true,
   "dependencies": {
-    "@elyra/pipeline-editor": "latest",
+    "@elyra/pipeline-editor": "../../packages/pipeline-editor",
     "react": "^18.2.0",
-    "react-dom": "^18.0.9",
-    "react-scripts": "latest"
+    "react-dom": "^18.0.9"
+  },
+  "devDependencies": {
+    "path": "npm:path-browserify@1.0.1",
+    "react-scripts": "^5.0.1",
+    "url": "npm:url@0.11.4"
   },
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject"
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  },
+  "eslintConfig": {
+    "extends": [
+      "react-app"
+    ]
   }
 }

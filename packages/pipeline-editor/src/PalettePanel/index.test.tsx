@@ -29,6 +29,8 @@ it("can drag node", () => {
     <PalettePanel
       nodes={[
         {
+          id: "example-id",
+          type: "execution_node",
           op: "example-op",
           app_data: {
             ui_data: {
@@ -38,7 +40,7 @@ it("can drag node", () => {
           },
         },
       ]}
-    />
+    />,
   );
 
   const setDragImage = jest.fn();

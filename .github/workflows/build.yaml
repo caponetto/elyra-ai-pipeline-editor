@@ -19,46 +19,53 @@ on: [push, pull_request]
 
 env:
   FORCE_COLOR: true
+  NODE_VERSION: 22
+  YARN_VERSION: 3.5.0
 
 jobs:
   prepare-yarn-cache:
     name: Prepare Cache
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
-      - uses: actions/setup-node@v2
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
         with:
-          node-version: "*"
-      - uses: actions/cache@v2
+          node-version: ${{ env.NODE_VERSION }}
+      - uses: actions/cache@v4
         with:
           path: |
             node_modules
             */*/node_modules
             /home/runner/.cache/Cypress
           key: ${{ runner.os }}-${{ hashFiles('**/yarn.lock') }}
-      - name: Install
+      - name: Install Yarn ${{ env.YARN_VERSION }}
         run: |
-          corepack prepare yarn@3.5.0 --activate
-          yarn set version 3.5.0
+          corepack prepare yarn@${{ env.YARN_VERSION }} --activate
+          yarn set version ${{ env.YARN_VERSION }}
           yarn --version
+      - name: Install dependencies
+        run: |
           yarn install
-          # --frozen-lockfile
-
   lint:
     name: Lint
     needs: prepare-yarn-cache
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
-      - uses: actions/setup-node@v2
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
         with:
-          node-version: "*"
-      - uses: actions/cache@v2
+          node-version: ${{ env.NODE_VERSION }}
+      - uses: actions/cache@v4
         with:
           path: |
             node_modules
             */*/node_modules
           key: ${{ runner.os }}-${{ hashFiles('**/yarn.lock') }}
+      - name: Install Yarn ${{ env.YARN_VERSION }}
+        run: |
+          corepack prepare yarn@${{ env.YARN_VERSION }} --activate
+          yarn set version ${{ env.YARN_VERSION }}
+          yarn --version
       - name: Install
         run: yarn install
       - name: Lint
@@ -71,24 +78,31 @@ jobs:
     needs: prepare-yarn-cache
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
-      - uses: actions/setup-node@v2
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
         with:
-          node-version: "*"
-      - uses: actions/cache@v2
+          node-version: ${{ env.NODE_VERSION }}
+      - uses: actions/cache@v4
         with:
           path: |
             node_modules
             */*/node_modules
           key: ${{ runner.os }}-${{ hashFiles('**/yarn.lock') }}
+      - name: Install Yarn ${{ env.YARN_VERSION }}
+        run: |
+          corepack prepare yarn@${{ env.YARN_VERSION }} --activate
+          yarn set version ${{ env.YARN_VERSION }}
+          yarn --version
       - name: Install
         run: yarn install
       - name: Build
         run: yarn build
       - name: Generate coverage report
         run: yarn test:cover
-      - name: Upload coverage report
-        uses: codecov/codecov-action@v1
+      - name: Upload coverage reports to Codecov
+        uses: codecov/codecov-action@v5
+        with:
+          token: ${{ secrets.CODECOV_TOKEN }}
 
   test:
     name: Test
@@ -96,21 +110,26 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        node-version: [15, 14, 12]
+        node-version: [18, 20, 22]
     steps:
-      - uses: actions/checkout@v2
-      - uses: actions/setup-node@v2 # Install dependencies with latest node version
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4 # Install dependencies with latest node version
         with:
-          node-version: "*"
-      - uses: actions/cache@v2
+          node-version: ${{ env.NODE_VERSION }}
+      - uses: actions/cache@v4
         with:
           path: |
             node_modules
             */*/node_modules
           key: ${{ runner.os }}-${{ hashFiles('**/yarn.lock') }}
+      - name: Install Yarn ${{ env.YARN_VERSION }}
+        run: |
+          corepack prepare yarn@${{ env.YARN_VERSION }} --activate
+          yarn set version ${{ env.YARN_VERSION }}
+          yarn --version
       - name: Install
         run: yarn install
-      - uses: actions/setup-node@v2
+      - uses: actions/setup-node@v4
         with:
           node-version: ${{ matrix.node-version }}
       - name: Build
@@ -123,17 +142,22 @@ jobs:
     needs: prepare-yarn-cache
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
-      - uses: actions/setup-node@v2
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
         with:
-          node-version: "*"
-      - uses: actions/cache@v2
+          node-version: ${{ env.NODE_VERSION }}
+      - uses: actions/cache@v4
         with:
           path: |
             node_modules
             */*/node_modules
             /home/runner/.cache/Cypress
           key: ${{ runner.os }}-${{ hashFiles('**/yarn.lock') }}
+      - name: Install Yarn ${{ env.YARN_VERSION }}
+        run: |
+          corepack prepare yarn@${{ env.YARN_VERSION }} --activate
+          yarn set version ${{ env.YARN_VERSION }}
+          yarn --version
       - name: Install
         run: yarn install
       - name: Build
@@ -142,3 +166,36 @@ jobs:
         run: yarn test:cypress
         env:
           NODE_OPTIONS: --openssl-legacy-provider
+
+  examples:
+    name: Build examples
+    needs: prepare-yarn-cache
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+      - uses: actions/cache@v4
+        with:
+          path: |
+            node_modules
+            */*/node_modules
+            /home/runner/.cache/Cypress
+          key: ${{ runner.os }}-${{ hashFiles('**/yarn.lock') }}
+      - name: Install Yarn ${{ env.YARN_VERSION }}
+        run: |
+          corepack prepare yarn@${{ env.YARN_VERSION }} --activate
+          yarn set version ${{ env.YARN_VERSION }}
+          yarn --version
+      - name: Install
+        run: yarn install
+      - name: Build
+        run: yarn build
+      - name: Install and build examples
+        run: |
+          cd examples/create-react-app
+          yarn install && yarn build
+          cd -
+          cd  examples/create-react-app-with-typescript
+          yarn install && yarn build

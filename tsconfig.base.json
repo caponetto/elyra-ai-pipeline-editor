@@ -1,5 +1,7 @@
 {
   "compilerOptions": {
+    "lib": ["dom", "esnext"],
+    "jsx": "react-jsx",
     "allowJs": true,
     "skipLibCheck": true,
 

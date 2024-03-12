@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-import React, { useMemo } from "react";
+import React, { ReactNode, useMemo } from "react";
 
 import { DeepPartial } from "redux";
 import { ThemeProvider as StyledThemeProvider } from "styled-components";
@@ -90,26 +90,32 @@ function mergeThemes(systemInfo: {
   return (overides: Partial<Theme>): Theme => {
     return deepmerge<Theme>(
       { ...defaultTheme, ...systemInfo },
-      overides as DeepPartial<Theme>
+      overides as DeepPartial<Theme>,
     );
   };
 }
 
-const ThemeProvider: React.FC<{ theme: DeepPartial<Theme> }> = ({
-  theme,
-  children,
-}) => {
+const ThemeProvider: React.FC<{
+  theme: DeepPartial<Theme>;
+  children: ReactNode;
+}> = ({ theme, children }) => {
   return (
     <StyledThemeProvider theme={theme as any}>{children}</StyledThemeProvider>
   );
 };
 
-export const InternalThemeProvider: React.FC = ({ children }) => {
+interface InternalThemeProviderProps {
+  children: ReactNode;
+}
+
+export const InternalThemeProvider: React.FC<InternalThemeProviderProps> = ({
+  children,
+}) => {
   const systemInfo = useSystemInfo();
   const theme = useMemo(() => mergeThemes(systemInfo), [systemInfo]);
 
   return (
-    <StyledThemeProvider theme={theme}>
+    <StyledThemeProvider theme={theme as any}>
       <CanvasOverrides />
       {children}
     </StyledThemeProvider>

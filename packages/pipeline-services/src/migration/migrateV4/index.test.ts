@@ -49,7 +49,7 @@ it("should move all properties to component_parameters", () => {
 
   const actual = migrate(v3);
   expect(actual.pipelines[0].nodes[0].app_data.component_parameters).toEqual(
-    properties
+    properties,
   );
 });
 

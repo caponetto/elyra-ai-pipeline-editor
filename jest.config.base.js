@@ -14,13 +14,25 @@
  * limitations under the License.
  */
 
+const esModules = ["@rjsf", "nanoid"].join("|");
+
 module.exports = {
-  preset: "ts-jest",
   testEnvironment: "node",
+  transformIgnorePatterns: [`/node_modules/(?!${esModules}).+`],
   testMatch: [
     // Match all typescript tests.
     "**/*.test.{ts,tsx}",
     // Ignore snapshot tests.
     "!**/*.snap.test.{ts,tsx}",
   ],
+  transform: {
+    "^.+\\.(j|t)sx?$": [
+      "ts-jest",
+      {
+        tsConfig: "./tsconfig.jest.json",
+      },
+    ],
+  },
+
+  moduleNameMapper: { "^uuid$": "uuid" },
 };

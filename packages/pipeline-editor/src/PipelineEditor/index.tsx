@@ -71,9 +71,7 @@ interface Props {
 const READ_ONLY_NODE_SVG_PATH =
   "M 0 0 h 160 a 6 6 0 0 1 6 6 v 28 a 6 6 0 0 1 -6 6 h -160 a 6 6 0 0 1 -6 -6 v -28 a 6 6 0 0 1 6 -6 z";
 
-function isCreateNodeEvent(
-  e: CanvasEditEvent
-): e is {
+function isCreateNodeEvent(e: CanvasEditEvent): e is {
   editType: "createNode" | "createAutoNode";
   nodeTemplate: { op: string };
   finalized?: boolean;
@@ -188,7 +186,7 @@ const PipelineEditor = forwardRef(
       nativeKeyboardActions,
       leftPalette,
     }: Props,
-    ref
+    ref,
   ) => {
     const theme = useTheme();
     const controller = useRef(new PipelineController());
@@ -235,7 +233,7 @@ const PipelineEditor = forwardRef(
         }
         // don't call to persist change because it will cause an infinity loop
       } catch (e) {
-        onError?.(e);
+        onError?.(e as Error);
       }
     }, [palette, onError, pipeline, readOnly, theme.palette.error.main]);
 
@@ -249,7 +247,7 @@ const PipelineEditor = forwardRef(
           });
         },
       }),
-      []
+      [],
     );
 
     const handleContextMenu = useCallback(
@@ -260,7 +258,7 @@ const PipelineEditor = forwardRef(
 
         const canExpand = isMenuItemEnabled(
           defaultMenu,
-          "expandSuperNodeInPlace"
+          "expandSuperNodeInPlace",
         );
 
         if (e.selectedObjectIds.length > 1) {
@@ -325,7 +323,7 @@ const PipelineEditor = forwardRef(
             if (e.targetObject.type === "execution_node") {
               const filenameRef = controller.current.resolveParameterRef(
                 e.targetObject.op,
-                "filehandler"
+                "filehandler",
               );
               const parameters = e.targetObject.app_data?.component_parameters;
 
@@ -464,7 +462,7 @@ const PipelineEditor = forwardRef(
         // anything else
         return defaultMenu;
       },
-      []
+      [],
     );
 
     const handleClickAction = useCallback(
@@ -476,7 +474,7 @@ const PipelineEditor = forwardRef(
           controller.current.editActionHandler({ editType: "properties" });
         }
       },
-      [onDoubleClickNode]
+      [onDoubleClickNode],
     );
 
     const [selectedNodeIDs, setSelectedNodeIDs] = useState<string[]>();
@@ -491,7 +489,7 @@ const PipelineEditor = forwardRef(
           setCurrentTab("palette");
         }
       },
-      [leftPalette]
+      [leftPalette],
     );
 
     const handleBeforeEditAction = useCallback(
@@ -514,7 +512,7 @@ const PipelineEditor = forwardRef(
 
         return e;
       },
-      [onPropertiesUpdateRequested]
+      [onPropertiesUpdateRequested],
     );
 
     const handleEditAction = useCallback(
@@ -524,7 +522,7 @@ const PipelineEditor = forwardRef(
         if (e.editType === "openFile") {
           const filenameRef = controller.current.resolveParameterRef(
             e.targetObject.op,
-            "filehandler"
+            "filehandler",
           );
           if (filenameRef) {
             payload =
@@ -551,7 +549,7 @@ const PipelineEditor = forwardRef(
           });
 
           const node = nodes.find((n) =>
-            n.app_data.extensions?.includes(path.extname(file))
+            n.app_data.extensions?.includes(path.extname(file)),
           );
 
           if (node !== undefined) {
@@ -600,19 +598,19 @@ const PipelineEditor = forwardRef(
 
         onChange?.(controller.current.getPipelineFlow());
       },
-      [onAction, onChange, onFileRequested]
+      [onAction, onChange, onFileRequested],
     );
 
     const handlePropertiesChange = useCallback(
-      (nodeID, data) => {
+      (nodeID: string, data: { [key: string]: any }) => {
         controller.current.updateProperties(nodeID, data);
         onChange?.(controller.current.getPipelineFlow());
       },
-      [onChange]
+      [onChange],
     );
 
     const handlePipelinePropertiesChange = useCallback(
-      (data) => {
+      (data: { [key: string]: any }) => {
         const pipeline = controller.current.getPipelineFlow();
         if (pipeline?.pipelines?.[0]?.app_data) {
           pipeline.pipelines[0].app_data.properties = {
@@ -623,11 +621,11 @@ const PipelineEditor = forwardRef(
           onChange?.(controller.current.getPipelineFlow());
         }
       },
-      [onChange]
+      [onChange],
     );
 
     const handlePipelineParametersChange = useCallback(
-      (data) => {
+      (data: { [key: string]: any }) => {
         const pipeline = controller.current.getPipelineFlow();
         if (pipeline?.pipelines?.[0]?.app_data) {
           pipeline.pipelines[0].app_data.properties = {
@@ -638,7 +636,7 @@ const PipelineEditor = forwardRef(
           onChange?.(controller.current.getPipelineFlow());
         }
       },
-      [onChange]
+      [onChange],
     );
 
     const handleTooltip = (tipType: string, e: TipEvent) => {
@@ -864,14 +862,14 @@ const PipelineEditor = forwardRef(
               panelOpen
                 ? "open"
                 : toolbar === undefined
-                ? "collapsed"
-                : "closed"
+                  ? "collapsed"
+                  : "closed"
             }
           />
         </IntlProvider>
       </Container>
     );
-  }
+  },
 );
 
 const ThemedPipelineEditor = forwardRef((props: Props, ref) => {

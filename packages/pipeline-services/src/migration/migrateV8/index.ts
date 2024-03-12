@@ -25,8 +25,10 @@ const regexMap: { [key: string]: RegExp } = {
   env_vars: /(?<env_var>\w+)=?(?<value>[^,]*?)(?= \w+=|$)/,
   mounted_volumes: /(?<path>[\w/]+)=?(?<pvc_name>[^,]*?)(?= \w+=|$)/,
   kubernetes_pod_annotations: /(?<key>\w+)=?(?<value>[^,]*?)(?= \w+=|$)/,
-  kubernetes_secrets: /(?<env_var>\w+)=?(?<name>[^:,\n\]]*):?(?<key>[^,]*?)(?= \w+=|$)/,
-  kubernetes_tolerations: /\w+=(?<key>.*?):(?<operator>[^,]*?):(?<value>[^,]*?):(?<effect>[^,]*?)(?= \w+=|$)/,
+  kubernetes_secrets:
+    /(?<env_var>\w+)=?(?<name>[^:,\n\]]*):?(?<key>[^,]*?)(?= \w+=|$)/,
+  kubernetes_tolerations:
+    /\w+=(?<key>.*?):(?<operator>[^,]*?):(?<value>[^,]*?):(?<effect>[^,]*?)(?= \w+=|$)/,
 };
 
 function migrate(pipelineFlow: any) {
@@ -44,7 +46,7 @@ function migrate(pipelineFlow: any) {
           }
           pipeline.app_data.properties.pipeline_defaults[key] = new_items;
         }
-      }
+      },
     );
 
     for (const node of pipeline.nodes) {
@@ -60,7 +62,7 @@ function migrate(pipelineFlow: any) {
         }
         // Update inputpath format
         const propKeys = Object.keys(
-          node.app_data.component_parameters[key] ?? {}
+          node.app_data.component_parameters[key] ?? {},
         );
         if (
           propKeys.length === 2 &&

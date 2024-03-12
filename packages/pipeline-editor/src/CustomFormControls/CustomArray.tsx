@@ -20,7 +20,7 @@ import { ArrayFieldTemplateProps } from "@rjsf/core";
 
 const renderDefaults = (
   items: any[],
-  props: any
+  props: any,
 ): React.ReactElement | undefined => {
   const allRendered = [];
   if (items.length === 0) {
@@ -39,14 +39,14 @@ const renderDefaults = (
                   {props.schema.items.properties[key].title}
                 </span>
               </label>
-            </div>
+            </div>,
           );
         } else {
           itemRendered.push(
             <div key={`${key}-defaultValue`} style={{ margin: "5px" }}>
               <label className="control-label">{`${props.schema.items.properties[key].title}: `}</label>
               <input readOnly value={item[key]} className="form-control" />
-            </div>
+            </div>,
           );
         }
       }
@@ -59,7 +59,7 @@ const renderDefaults = (
             (pipeline default)
           </label>
           {itemRendered}
-        </div>
+        </div>,
       );
     }
   } else {
@@ -86,7 +86,7 @@ const renderDefaults = (
 export const ArrayTemplate: React.FC<ArrayFieldTemplateProps> = (props) => {
   const renderedDefaults = renderDefaults(
     props.uiSchema.pipeline_defaults ?? [],
-    props
+    props,
   );
   const handleChooseFile = useCallback(async () => {
     props.formContext.onFileRequested({
@@ -126,7 +126,7 @@ export const ArrayTemplate: React.FC<ArrayFieldTemplateProps> = (props) => {
           style={{ marginLeft: "5px" }}
           onClick={() =>
             props.formContext?.onPropertiesUpdateRequested(
-              props.formContext.formData
+              props.formContext.formData,
             )
           }
         >

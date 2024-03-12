@@ -18,7 +18,9 @@ import { useEffect, useMemo, useState } from "react";
 
 function useSystemInfo() {
   const [mode, setMode] = useState<"dark" | "light">(
-    window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light"
+    window.matchMedia("(prefers-color-scheme: dark)").matches
+      ? "dark"
+      : "light",
   );
 
   useEffect(() => {

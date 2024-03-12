@@ -41,7 +41,7 @@ export function getNestedEnumValidators<T extends FlatData | undefined>({
       isValid: (value: T) => {
         const selected = data.find((item: Data) => item.value === value?.value);
         const option = selected?.options?.find(
-          (item: Data) => item.value === value?.option
+          (item: Data) => item.value === value?.option,
         );
         return !!selected && (allownooptions || !!option);
       },
