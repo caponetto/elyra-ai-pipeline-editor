@@ -28,11 +28,11 @@ export function deepmerge<T>(target: T, source: DeepPartial<T>) {
       const key = _key as keyof DeepPartial<T>;
 
       const tVal = target[key];
-      const sVal = source[key] as DeepPartial<typeof tVal>;
+      const sVal = source[key] as DeepPartial<T[keyof T] & ({} | null)>;
 
       if (sVal !== undefined) {
         if (isPlainObject(sVal) && tVal !== undefined) {
-          output[key] = deepmerge<typeof tVal>(tVal, sVal as any);
+          output[key] = deepmerge<typeof tVal>(tVal, sVal);
         } else {
           output[key] = sVal as T[keyof T];
         }

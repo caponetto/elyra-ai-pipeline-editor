@@ -118,7 +118,6 @@ function PalettePanel({ nodes }: Props) {
       nodeGhost.style.top = "-100px";
       document.body.appendChild(nodeGhost);
 
-      // Use ReactDOM.createRoot for rendering
       const root = createRoot(nodeGhost);
       root.render(
         <Node

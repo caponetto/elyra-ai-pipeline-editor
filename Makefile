@@ -28,7 +28,7 @@ lint: ## Run linters
 	yarn format
 
 install: ## Install dependencies and build packages
-	yarn install && yarn build
+	yarn install && yarn build:packages
 
 dev-link: ## Link packages
 	yarn link-all

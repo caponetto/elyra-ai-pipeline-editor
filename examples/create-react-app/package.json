@@ -1,9 +1,9 @@
 {
-  "name": "create-react-app",
+  "name": "@elyra-examples/create-react-app",
   "version": "0.0.0",
   "private": true,
   "dependencies": {
-    "@elyra/pipeline-editor": "../../packages/pipeline-editor",
+    "@elyra/pipeline-editor": "workspace:*",
     "react": "^18.2.0",
     "react-dom": "^18.0.9"
   },

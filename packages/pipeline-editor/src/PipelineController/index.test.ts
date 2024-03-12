@@ -57,7 +57,7 @@ describe("isPipelineFlowV3", () => {
       pipelines: [
         {
           app_data: {
-            version: "1.0", // Invalid version type
+            version: "1.0",
           },
         },
       ],
