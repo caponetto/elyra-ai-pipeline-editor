@@ -40,6 +40,7 @@ import {
 import { IntlProvider } from "react-intl";
 import styled, { useTheme } from "styled-components";
 
+import useBlockEvents from "./useBlockEvents";
 import NodeTooltip from "../NodeTooltip";
 import PalettePanel from "../PalettePanel";
 import PipelineController from "../PipelineController";
@@ -48,7 +49,6 @@ import { PropertiesPanel } from "../properties-panels/PropertiesPanel";
 import SplitPanelLayout from "../SplitPanelLayout";
 import TabbedPanelLayout from "../TabbedPanelLayout";
 import { InternalThemeProvider } from "../ThemeProvider";
-import useBlockEvents from "./useBlockEvents";
 
 interface Props {
   pipeline: any;
@@ -235,7 +235,7 @@ const PipelineEditor = forwardRef(
         }
         // don't call to persist change because it will cause an infinity loop
       } catch (e) {
-        onError?.(e);
+        onError?.(e as Error);
       }
     }, [palette, onError, pipeline, readOnly, theme.palette.error.main]);
 
@@ -604,7 +604,7 @@ const PipelineEditor = forwardRef(
     );
 
     const handlePropertiesChange = useCallback(
-      (nodeID, data) => {
+      (nodeID: string, data: any) => {
         controller.current.updateProperties(nodeID, data);
         onChange?.(controller.current.getPipelineFlow());
       },
@@ -612,7 +612,7 @@ const PipelineEditor = forwardRef(
     );
 
     const handlePipelinePropertiesChange = useCallback(
-      (data) => {
+      (data: any) => {
         const pipeline = controller.current.getPipelineFlow();
         if (pipeline?.pipelines?.[0]?.app_data) {
           pipeline.pipelines[0].app_data.properties = {
@@ -627,7 +627,7 @@ const PipelineEditor = forwardRef(
     );
 
     const handlePipelineParametersChange = useCallback(
-      (data) => {
+      (data: any) => {
         const pipeline = controller.current.getPipelineFlow();
         if (pipeline?.pipelines?.[0]?.app_data) {
           pipeline.pipelines[0].app_data.properties = {

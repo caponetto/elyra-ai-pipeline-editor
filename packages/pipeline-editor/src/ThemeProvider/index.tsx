@@ -19,10 +19,10 @@ import React, { useMemo } from "react";
 import { DeepPartial } from "redux";
 import { ThemeProvider as StyledThemeProvider } from "styled-components";
 
-import { Theme } from "../types";
 import { CanvasOverrides } from "./styles";
 import useSystemInfo from "./useSystemInfo";
 import { deepmerge } from "./utils";
+import { Theme } from "../types";
 
 const defaultTheme: Omit<Theme, "mode" | "platform"> = {
   palette: {
@@ -95,21 +95,23 @@ function mergeThemes(systemInfo: {
   };
 }
 
-const ThemeProvider: React.FC<{ theme: DeepPartial<Theme> }> = ({
-  theme,
-  children,
-}) => {
+const ThemeProvider: React.FC<{
+  theme: DeepPartial<Theme>;
+  children: React.ReactNode;
+}> = ({ theme, children }) => {
   return (
     <StyledThemeProvider theme={theme as any}>{children}</StyledThemeProvider>
   );
 };
 
-export const InternalThemeProvider: React.FC = ({ children }) => {
+export const InternalThemeProvider: React.FC<{ children: React.ReactNode }> = ({
+  children,
+}) => {
   const systemInfo = useSystemInfo();
   const theme = useMemo(() => mergeThemes(systemInfo), [systemInfo]);
 
   return (
-    <StyledThemeProvider theme={theme}>
+    <StyledThemeProvider theme={theme as any}>
       <CanvasOverrides />
       {children}
     </StyledThemeProvider>
