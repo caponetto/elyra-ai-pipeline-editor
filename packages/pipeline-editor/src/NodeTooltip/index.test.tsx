@@ -14,15 +14,15 @@
  * limitations under the License.
  */
 
-import { render } from "../test-utils";
 import NodeTooltip from "./";
+import { render } from "../test-utils";
 
 it("renders one item", () => {
   const { container } = render(
     <NodeTooltip
       properties={[{ label: "Label", value: "some value" }]}
       nodeLabel="Component Type"
-    />
+    />,
   );
   expect(container.firstChild).toHaveTextContent(/label/i);
   expect(container.firstChild).toHaveTextContent(/some value/i);
@@ -37,7 +37,7 @@ it("renders multiple items", () => {
         { label: "Array", value: ["one", "two"] },
       ]}
       nodeLabel="Component Type"
-    />
+    />,
   );
 
   expect(container.firstChild).toHaveTextContent(/label/i);
@@ -55,7 +55,7 @@ it("renders with errors", () => {
       error="this is an error"
       properties={[]}
       nodeLabel="Component type"
-    />
+    />,
   );
 
   expect(container.firstChild).toHaveTextContent(/error/i);
@@ -68,7 +68,7 @@ it("renders with errors and properties", () => {
     <NodeTooltip
       error="this is an error"
       properties={[{ label: "Label", value: "some value" }]}
-    />
+    />,
   );
 
   expect(container.firstChild).toHaveTextContent(/error/i);

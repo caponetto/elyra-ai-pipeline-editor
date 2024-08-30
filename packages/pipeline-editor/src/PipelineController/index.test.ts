@@ -14,16 +14,16 @@
  * limitations under the License.
  */
 
+import PipelineController, {
+  PIPELINE_CURRENT_VERSION,
+  isPipelineFlowV3,
+} from "./";
 import {
   PipelineOutOfDateError,
   InvalidPipelineError,
   ElyraOutOfDateError,
 } from "../errors";
 import { createPalette, nodeSpec, samplePalette } from "../test-utils";
-import PipelineController, {
-  PIPELINE_CURRENT_VERSION,
-  isPipelineFlowV3,
-} from "./";
 
 describe("isPipelineFlowV3", () => {
   it("return false for null flow", () => {
@@ -146,7 +146,7 @@ describe("open", () => {
     expect(open).not.toThrow();
     expect(controller.getPipelineFlow().pipelines).toHaveLength(1);
     expect(controller.getPipelineFlow().pipelines[0].app_data?.version).toBe(
-      PIPELINE_CURRENT_VERSION
+      PIPELINE_CURRENT_VERSION,
     );
   });
 
@@ -159,7 +159,7 @@ describe("open", () => {
     expect(open).not.toThrow();
     expect(controller.getPipelineFlow().pipelines).toHaveLength(1);
     expect(controller.getPipelineFlow().pipelines[0].app_data?.version).toBe(
-      PIPELINE_CURRENT_VERSION
+      PIPELINE_CURRENT_VERSION,
     );
   });
 
@@ -172,7 +172,7 @@ describe("open", () => {
     expect(open).not.toThrow();
     expect(controller.getPipelineFlow().pipelines).toHaveLength(1);
     expect(controller.getPipelineFlow().pipelines[0].app_data?.version).toBe(
-      PIPELINE_CURRENT_VERSION
+      PIPELINE_CURRENT_VERSION,
     );
   });
 
@@ -214,7 +214,7 @@ describe("addNode", () => {
           label: "example-label",
           description: "example-description",
         },
-      ])
+      ]),
     );
 
     const editActionHandler = jest.fn();
@@ -241,7 +241,7 @@ describe("addNode", () => {
           label: "example-label",
           description: "example-description",
         },
-      ])
+      ]),
     );
 
     const editActionHandler = jest.fn();
@@ -360,7 +360,7 @@ describe("setNodeErrors", () => {
         pipeline2: ["node2", "node3"],
       },
       expect.anything(),
-      true
+      true,
     );
 
     expect(setNodeDecorations).toHaveBeenCalledTimes(3);
@@ -404,7 +404,7 @@ describe("setLinkErrors", () => {
         pipeline2: ["link2", "link3"],
       },
       expect.anything(),
-      true
+      true,
     );
   });
 });
@@ -1071,7 +1071,7 @@ describe("resetStyles", () => {
 
     const flow = controller.getPipelineFlow();
     expect(flow.pipelines[0].nodes[0].app_data?.ui_data?.label).toBe(
-      "Notebook Label"
+      "Notebook Label",
     );
   });
 
@@ -1110,7 +1110,7 @@ describe("resetStyles", () => {
 
     const flow = controller.getPipelineFlow();
     expect(flow.pipelines[0].nodes[0].app_data?.ui_data?.label).toBe(
-      "example.py"
+      "example.py",
     );
   });
 
@@ -1148,7 +1148,7 @@ describe("resetStyles", () => {
 
     const flow = controller.getPipelineFlow();
     expect(flow.pipelines[0].nodes[0].app_data?.ui_data?.label).toBe(
-      "user label"
+      "user label",
     );
   });
 
@@ -1223,7 +1223,7 @@ describe("resetStyles", () => {
     const flow = controller.getPipelineFlow();
     expect(flow.pipelines[0].nodes[0].app_data?.filename).toBe("example.py");
     expect(
-      flow.pipelines[0].nodes[0].app_data?.invalidNodeError
+      flow.pipelines[0].nodes[0].app_data?.invalidNodeError,
     ).toBeUndefined();
   });
 });
@@ -1287,13 +1287,13 @@ describe("validate", () => {
 
     const flow = controller.getPipelineFlow();
     expect(
-      flow.pipelines[0].nodes[0].app_data?.invalidNodeError
+      flow.pipelines[0].nodes[0].app_data?.invalidNodeError,
     ).toBeUndefined();
     expect(
-      flow.pipelines[0].nodes[1].app_data?.invalidNodeError
+      flow.pipelines[0].nodes[1].app_data?.invalidNodeError,
     ).toBeUndefined();
     expect(
-      flow.pipelines[0].nodes[2].app_data?.invalidNodeError
+      flow.pipelines[0].nodes[2].app_data?.invalidNodeError,
     ).toBeUndefined();
   });
 
@@ -1324,14 +1324,14 @@ describe("validate", () => {
           description: "",
           label: "",
         },
-      ])
+      ]),
     );
 
     controller.validate();
 
     const flow = controller.getPipelineFlow();
     expect(
-      flow.pipelines[0].nodes[0].app_data?.invalidNodeError
+      flow.pipelines[0].nodes[0].app_data?.invalidNodeError,
     ).toBeUndefined();
   });
 });
@@ -1389,7 +1389,7 @@ describe("updateProperties", () => {
 
     expect(
       controller.getPipelineFlow().pipelines[0].nodes[0].app_data
-        ?.component_parameters
+        ?.component_parameters,
     ).toStrictEqual({});
   });
 });

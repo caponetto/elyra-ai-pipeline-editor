@@ -175,18 +175,14 @@ class PipelineController extends CanvasController {
       data.nodeTemplate.app_data.component_parameters[filenameRef] = path;
       if (typeof onPropertiesUpdateRequested === "function") {
         const properties = await onPropertiesUpdateRequested(
-          data.nodeTemplate.app_data
+          data.nodeTemplate.app_data,
         );
 
-        const {
-          component_parameters: oldComponentParameters,
-          ...oldAppData
-        } = data.nodeTemplate.app_data;
+        const { component_parameters: oldComponentParameters, ...oldAppData } =
+          data.nodeTemplate.app_data;
 
-        const {
-          component_parameters: newComponentParameters,
-          ...newAppData
-        } = properties;
+        const { component_parameters: newComponentParameters, ...newAppData } =
+          properties;
 
         data.nodeTemplate.app_data = {
           ...oldAppData,
@@ -204,7 +200,7 @@ class PipelineController extends CanvasController {
 
   setNodeErrors(
     nodeToBeStyled: { [key: string]: string[] },
-    styleOptions?: { redColor: string }
+    styleOptions?: { redColor: string },
   ) {
     this.setObjectsStyle(
       nodeToBeStyled,
@@ -212,7 +208,7 @@ class PipelineController extends CanvasController {
         body: { default: `stroke: ${styleOptions?.redColor};` },
         selection_outline: { default: `stroke: ${styleOptions?.redColor};` },
       },
-      true
+      true,
     );
 
     // TODO: this shouldn't be hard-coded but we cant use css variables.
@@ -221,7 +217,7 @@ class PipelineController extends CanvasController {
       image:
         "data:image/svg+xml;utf8," +
         encodeURIComponent(
-          '<svg focusable="false" preserveAspectRatio="xMidYMid meet" xmlns="http://www.w3.org/2000/svg" fill="#da1e28" width="16" height="16" viewBox="0 0 16 16" aria-hidden="true"><circle cx="8" cy="8" r="8" fill="#ffffff"></circle><path d="M8,1C4.2,1,1,4.2,1,8s3.2,7,7,7s7-3.1,7-7S11.9,1,8,1z M7.5,4h1v5h-1C7.5,9,7.5,4,7.5,4z M8,12.2	c-0.4,0-0.8-0.4-0.8-0.8s0.3-0.8,0.8-0.8c0.4,0,0.8,0.4,0.8,0.8S8.4,12.2,8,12.2z"></path><path d="M7.5,4h1v5h-1C7.5,9,7.5,4,7.5,4z M8,12.2c-0.4,0-0.8-0.4-0.8-0.8s0.3-0.8,0.8-0.8	c0.4,0,0.8,0.4,0.8,0.8S8.4,12.2,8,12.2z" data-icon-path="inner-path" opacity="0"></path></svg>'
+          '<svg focusable="false" preserveAspectRatio="xMidYMid meet" xmlns="http://www.w3.org/2000/svg" fill="#da1e28" width="16" height="16" viewBox="0 0 16 16" aria-hidden="true"><circle cx="8" cy="8" r="8" fill="#ffffff"></circle><path d="M8,1C4.2,1,1,4.2,1,8s3.2,7,7,7s7-3.1,7-7S11.9,1,8,1z M7.5,4h1v5h-1C7.5,9,7.5,4,7.5,4z M8,12.2	c-0.4,0-0.8-0.4-0.8-0.8s0.3-0.8,0.8-0.8c0.4,0,0.8,0.4,0.8,0.8S8.4,12.2,8,12.2z"></path><path d="M7.5,4h1v5h-1C7.5,9,7.5,4,7.5,4z M8,12.2c-0.4,0-0.8-0.4-0.8-0.8s0.3-0.8,0.8-0.8	c0.4,0,0.8,0.4,0.8,0.8S8.4,12.2,8,12.2z" data-icon-path="inner-path" opacity="0"></path></svg>',
         ),
       outline: false,
       position: "topRight",
@@ -237,7 +233,7 @@ class PipelineController extends CanvasController {
 
   setLinkErrors(
     linkToBeStyled: { [key: string]: string[] },
-    styleOptions?: { redColor: string }
+    styleOptions?: { redColor: string },
   ) {
     this.setLinksStyle(
       linkToBeStyled,
@@ -252,7 +248,7 @@ class PipelineController extends CanvasController {
             `,
         },
       },
-      true
+      true,
     );
   }
 
@@ -336,7 +332,7 @@ class PipelineController extends CanvasController {
                 invalidNodeError: undefined,
               },
             },
-            pipeline.id
+            pipeline.id,
           );
         }
       }
@@ -345,7 +341,7 @@ class PipelineController extends CanvasController {
 
   setSupernodeErrors(
     pipelineIDs: string[],
-    styleOptions?: { redColor: string }
+    styleOptions?: { redColor: string },
   ) {
     let supernodesWithErrors: { [key: string]: string[] } = {};
     for (const pipelineID of pipelineIDs) {
@@ -369,7 +365,7 @@ class PipelineController extends CanvasController {
 
     const problems = validate(
       JSON.stringify(this.getPipelineFlow()),
-      this.getAllPaletteNodes()
+      this.getAllPaletteNodes(),
     );
 
     const linksWithErrors: { [key: string]: string[] } = {};
@@ -414,7 +410,7 @@ class PipelineController extends CanvasController {
           ...Object.keys(nodesWithErrors),
         ]),
       ],
-      styleOptions
+      styleOptions,
     );
   }
 
@@ -451,7 +447,7 @@ class PipelineController extends CanvasController {
   addPipelineDefaultUihints(
     schema: any,
     propValue: any,
-    existingPlaceholder?: any
+    existingPlaceholder?: any,
   ) {
     return produce(schema.uihints ?? {}, (draft: any) => {
       if (schema.enum) {
@@ -479,7 +475,7 @@ class PipelineController extends CanvasController {
             draft[property] = this.addPipelineDefaultUihints(
               schema.properties[property],
               propValue[property],
-              schema.uihints?.[property]?.["ui:placeholder"]
+              schema.uihints?.[property]?.["ui:placeholder"],
             );
           }
         }
@@ -489,14 +485,15 @@ class PipelineController extends CanvasController {
 
   propagatePipelineDefaultProperties(
     nodes: NodeType[],
-    palette: PaletteV3
+    palette: PaletteV3,
   ): NodeType[] {
     return produce(nodes, (draft: any) => {
       const properties =
         palette.properties?.properties?.pipeline_defaults?.properties ?? {};
       for (const prop in properties) {
-        const propValue = this.getPipelineFlow()?.pipelines?.[0]?.app_data
-          ?.properties?.pipeline_defaults?.[prop];
+        const propValue =
+          this.getPipelineFlow()?.pipelines?.[0]?.app_data?.properties
+            ?.pipeline_defaults?.[prop];
         if (propValue === undefined) {
           // Skip propagation if the pipeline default isn't defined
           continue;
@@ -527,10 +524,10 @@ class PipelineController extends CanvasController {
     const upstreamNodes = this.objectModel.getHighlightObjectIds(
       pipelineId,
       [nodeId],
-      "upstream"
+      "upstream",
     );
     return this.idsToNodes(
-      upstreamNodes.nodes[pipelineId].filter((id: string) => id !== nodeId)
+      upstreamNodes.nodes[pipelineId].filter((id: string) => id !== nodeId),
     );
   }
 
@@ -568,8 +565,9 @@ class PipelineController extends CanvasController {
       if (nodeDef === undefined) {
         return "Node type not found.";
       }
-      const componentProperties = nodeDef!.app_data.properties.properties
-        ?.component_parameters?.properties;
+      const componentProperties =
+        nodeDef!.app_data.properties.properties?.component_parameters
+          ?.properties;
 
       for (const p of problems) {
         switch (p.info.type) {
@@ -585,7 +583,7 @@ class PipelineController extends CanvasController {
               const property = p.info.property;
               const label = componentProperties[property].title;
               nodeProblems.push(
-                `property "${label}" is invalid: ${p.info.message}`
+                `property "${label}" is invalid: ${p.info.message}`,
               );
             }
             break;
@@ -611,7 +609,7 @@ class PipelineController extends CanvasController {
       const upstreamNode = this.findExecutionNode(value.value?.value ?? "");
       const upstreamNodeLabel = upstreamNode?.app_data?.ui_data?.label;
       const upstreamNodeDef = this.getAllPaletteNodes().find(
-        (nodeDef) => nodeDef.op === upstreamNode?.op
+        (nodeDef) => nodeDef.op === upstreamNode?.op,
       );
       if (value.value?.value && value.value.option === "") {
         return {
@@ -657,7 +655,7 @@ class PipelineController extends CanvasController {
         info?.oneOf?.find((def: any) => {
           return def.properties?.widget?.default === value.widget;
         })?.properties?.value,
-        label
+        label,
       );
     } else if (info?.enum !== undefined) {
       // If no enum value is set show pipeline default value
@@ -670,8 +668,9 @@ class PipelineController extends CanvasController {
       };
     } else if (info?.type === "array") {
       // Merge pipeline defaults prop array with node prop array
-      const pipelineDefaultValue: any[] = this.getPipelineFlow()?.pipelines?.[0]
-        .app_data?.properties?.pipeline_defaults?.[key];
+      const pipelineDefaultValue: any[] =
+        this.getPipelineFlow()?.pipelines?.[0].app_data?.properties
+          ?.pipeline_defaults?.[key];
       return {
         label: label,
         value: value
@@ -699,7 +698,7 @@ class PipelineController extends CanvasController {
                 } else {
                   return i + " (pipeline default)";
                 }
-              }) ?? []
+              }) ?? [],
           ),
       };
     } else {
@@ -731,8 +730,8 @@ class PipelineController extends CanvasController {
             app_data?.component_parameters?.[prop],
             prop,
             info[prop],
-            info[prop].title
-          )
+            info[prop].title,
+          ),
         );
       }
       return properties;
@@ -746,7 +745,7 @@ class PipelineController extends CanvasController {
     if (pipeline !== undefined) {
       const app_data = prefixedToNested(data);
       for (const [key, val] of Object.entries(
-        app_data.component_parameters ?? {}
+        app_data.component_parameters ?? {},
       )) {
         if (val === undefined || val === null) {
           delete app_data.component_parameters[key];
@@ -757,7 +756,7 @@ class PipelineController extends CanvasController {
         const node = this.getNode(nodeID, pipeline.id);
         if (node.type === "execution_node") {
           const nodeDef = this.getAllPaletteNodes().find(
-            (n) => n.op === node.op
+            (n) => n.op === node.op,
           );
           if (nodeDef) {
             const newLabel = this.getLabelForNode(node, nodeDef);

@@ -16,8 +16,8 @@
 
 import userEvent from "@testing-library/user-event";
 
-import { render, screen } from "../test-utils";
 import TabbedPanelLayout from "./";
+import { render, screen } from "../test-utils";
 
 it("calls onTabClick with correct tab id in collapsed mode", async () => {
   const handleTabClick = jest.fn();
@@ -38,7 +38,7 @@ it("calls onTabClick with correct tab id in collapsed mode", async () => {
       ]}
       collapsed
       onTabClick={handleTabClick}
-    />
+    />,
   );
 
   userEvent.click(screen.getByTitle(/tab two/i));
@@ -64,7 +64,7 @@ it("calls onTabClick with correct tab id in expanded mode", async () => {
         },
       ]}
       onTabClick={handleTabClick}
-    />
+    />,
   );
 
   userEvent.click(screen.getByText(/tab two/i));
@@ -91,7 +91,7 @@ it("calls onClose", async () => {
       ]}
       onClose={handleClose}
       showCloseButton
-    />
+    />,
   );
 
   userEvent.click(screen.getByTitle(/close panel/i));
@@ -116,7 +116,7 @@ it("does not break with no close handler", async () => {
         },
       ]}
       showCloseButton
-    />
+    />,
   );
 
   userEvent.click(screen.getByTitle(/close panel/i));
@@ -138,7 +138,7 @@ it("does not break with no tab click handler", async () => {
           content: <div>Tab two content</div>,
         },
       ]}
-    />
+    />,
   );
 
   userEvent.click(screen.getByText(/tab two/i));
@@ -159,7 +159,7 @@ it("does not break with no tab click handler", async () => {
         },
       ]}
       collapsed
-    />
+    />,
   );
 
   userEvent.click(screen.getByTitle(/tab two/i));
@@ -180,7 +180,7 @@ it("renders the first tab when no current tab is provided", async () => {
           content: <div>Tab two content</div>,
         },
       ]}
-    />
+    />,
   );
 
   expect(container).toHaveTextContent(/tab one content/i);
@@ -202,7 +202,7 @@ it("shows invalid tab message when current tab doesn't exist", async () => {
           content: <div>Tab two content</div>,
         },
       ]}
-    />
+    />,
   );
 
   expect(container).toHaveTextContent(/invalid tab id/i);

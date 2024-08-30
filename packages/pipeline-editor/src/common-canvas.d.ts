@@ -96,12 +96,12 @@ declare module "@elyra/canvas" {
     canvasController: CanvasController;
     contextMenuHandler?: (
       e: ContextMenuEvent,
-      defaultMenu: ContextMenu
+      defaultMenu: ContextMenu,
     ) => void;
     clickActionHandler?: (e: CanvasClickEvent) => void;
     beforeEditActionHandler?: (
       e: CanvasEditEvent,
-      command: string | null
+      command: string | null,
     ) => void;
     editActionHandler?: (e: CanvasEditEvent) => void;
     selectionChangeHandler?: (e: CanvasSelectionEvent) => void;
@@ -165,14 +165,14 @@ declare module "@elyra/canvas" {
       getHighlightObjectIds(
         pipelineId: string,
         nodeIds: string[],
-        operator: string
+        operator: string,
       ): { nodes: any; links: any };
     };
     getSupernodeObjReferencing(pipelineId: string): any;
     setLinksStyle(
       linkObjectIds: { [key: string]: string[] },
       newStyle: unknown,
-      temporary: boolean
+      temporary: boolean,
     ): void;
     removeAllStyles(temporary?: boolean): void;
     clearPipelineFlow(): void;
@@ -188,26 +188,26 @@ declare module "@elyra/canvas" {
     setObjectsStyle(
       pipelineObjectIds: { [key: string]: string[] },
       newStyle: unknown,
-      temporary: boolean
+      temporary: boolean,
     ): void;
     setNodeDecorations(
       nodeId: string,
       newDecorations: unknown[],
-      pipelineId: string
+      pipelineId: string,
     ): void;
     getLinks(
-      pipelineID?: string
+      pipelineID?: string,
     ): { id: string; trgNodeId: string; srcNodeId: string; type: string }[];
     setLinkProperties(
       linkId: string,
       linkProperties: unknown,
-      pipelineId?: string
+      pipelineId?: string,
     ): void;
     getNodes(): NodeTypeDef[];
     setNodeProperties(
       nodeId: string,
       properties: unknown,
-      pipelineId: string
+      pipelineId: string,
     ): void;
     setNodeLabel(nodeId: string, newLabel: string, pipelineId: string): void;
   }

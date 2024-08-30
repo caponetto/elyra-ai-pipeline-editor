@@ -14,8 +14,8 @@
  * limitations under the License.
  */
 
-import { fireEvent, render, screen } from "../test-utils";
 import PalettePanel, { Node } from "./";
+import { fireEvent, render, screen } from "../test-utils";
 
 describe("Node", () => {
   it("renders", () => {
@@ -38,7 +38,7 @@ it("can drag node", () => {
           },
         },
       ]}
-    />
+    />,
   );
 
   const setDragImage = jest.fn();

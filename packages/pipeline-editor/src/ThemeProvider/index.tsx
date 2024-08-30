@@ -90,7 +90,7 @@ function mergeThemes(systemInfo: {
   return (overides: Partial<Theme>): Theme => {
     return deepmerge<Theme>(
       { ...defaultTheme, ...systemInfo },
-      overides as DeepPartial<Theme>
+      overides as DeepPartial<Theme>,
     );
   };
 }

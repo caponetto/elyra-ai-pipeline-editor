@@ -14,6 +14,7 @@
  * limitations under the License.
  */
 
+import PipelineEditor from "./";
 import {
   render,
   screen,
@@ -21,11 +22,10 @@ import {
   samplePipeline,
   createPalette,
 } from "../test-utils";
-import PipelineEditor from "./";
 
 it("shows custom empty component for undefined pipeline", () => {
   render(
-    <PipelineEditor pipeline={undefined}>custom empty message</PipelineEditor>
+    <PipelineEditor pipeline={undefined}>custom empty message</PipelineEditor>,
   );
   expect(screen.getByText(/custom empty message/i)).toBeInTheDocument();
 });
@@ -43,7 +43,7 @@ it("renders a pipeline with two nodes", () => {
 
 it("renders a pipeline with two nodes in readOnly mode", () => {
   const { container } = render(
-    <PipelineEditor pipeline={samplePipeline} readOnly />
+    <PipelineEditor pipeline={samplePipeline} readOnly />,
   );
 
   expect(container.getElementsByClassName("d3-node-group")).toHaveLength(2);
@@ -64,7 +64,7 @@ it("renders", () => {
       pipeline={samplePipeline}
       palette={createPalette([])}
       onError={handleError}
-    />
+    />,
   );
   expect(handleError).not.toHaveBeenCalled();
 });
@@ -76,7 +76,7 @@ it("can add node through imperative handle", async () => {
       ref={(r) => (handle = r)}
       pipeline={samplePipeline}
       palette={createPalette([nodeSpec as any])}
-    />
+    />,
   );
 
   expect(container.getElementsByClassName("d3-node-group")).toHaveLength(2);

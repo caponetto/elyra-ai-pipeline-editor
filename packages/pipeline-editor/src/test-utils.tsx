@@ -181,8 +181,7 @@ export const nodeSpec: CustomNodeSpecification = {
           include_subdirectories: {
             type: "boolean",
             title: "Include Subdirectories",
-            data:
-              "Whether or not to include recursively include subdirectories when submitting a pipeline (This may increase submission time).",
+            data: "Whether or not to include recursively include subdirectories when submitting a pipeline (This may increase submission time).",
           },
           env_vars: {
             title: "Environment Variables",
@@ -445,7 +444,7 @@ function createPalette(nodes: CustomNodeSpecification[]): PaletteV3 {
 
 function render(
   ui: Parameters<typeof rtlRender>[0],
-  renderOptions?: Parameters<typeof rtlRender>[1]
+  renderOptions?: Parameters<typeof rtlRender>[1],
 ) {
   const Wrapper: React.FC = ({ children }) => {
     return <InternalThemeProvider>{children}</InternalThemeProvider>;

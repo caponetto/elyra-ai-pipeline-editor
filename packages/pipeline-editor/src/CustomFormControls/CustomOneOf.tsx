@@ -63,7 +63,7 @@ export const CustomOneOf: Field = (props) => {
       defaults = utils.getDefaultFormState(
         options[selectedOption],
         undefined,
-        rootSchema
+        rootSchema,
       );
     } catch {}
     props.onChange(defaults);
@@ -75,7 +75,7 @@ export const CustomOneOf: Field = (props) => {
   const Widget = utils.getWidget(
     { type: "number" },
     "select",
-    widgets
+    widgets,
   ) as React.FC<WidgetProps>;
 
   const option = options[findOption()] || null;
