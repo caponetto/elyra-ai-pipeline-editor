@@ -25,11 +25,11 @@ jobs:
     name: Prepare Cache
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
-      - uses: actions/setup-node@v2
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
         with:
-          node-version: "*"
-      - uses: actions/cache@v2
+          node-version: "20.17.0"
+      - uses: actions/cache@v4
         with:
           path: |
             node_modules
@@ -49,11 +49,11 @@ jobs:
     needs: prepare-yarn-cache
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
-      - uses: actions/setup-node@v2
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
         with:
-          node-version: "*"
-      - uses: actions/cache@v2
+          node-version: "20.17.0"
+      - uses: actions/cache@v4
         with:
           path: |
             node_modules
@@ -71,11 +71,11 @@ jobs:
     needs: prepare-yarn-cache
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
-      - uses: actions/setup-node@v2
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
         with:
-          node-version: "*"
-      - uses: actions/cache@v2
+          node-version: "20.17.0"
+      - uses: actions/cache@v4
         with:
           path: |
             node_modules
@@ -96,13 +96,13 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        node-version: [15, 14, 12]
+        node-version: [20]
     steps:
-      - uses: actions/checkout@v2
-      - uses: actions/setup-node@v2 # Install dependencies with latest node version
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
         with:
-          node-version: "*"
-      - uses: actions/cache@v2
+          node-version: "20.17.0"
+      - uses: actions/cache@v4
         with:
           path: |
             node_modules
@@ -110,7 +110,7 @@ jobs:
           key: ${{ runner.os }}-${{ hashFiles('**/yarn.lock') }}
       - name: Install
         run: yarn install
-      - uses: actions/setup-node@v2
+      - uses: actions/setup-node@v4
         with:
           node-version: ${{ matrix.node-version }}
       - name: Build
@@ -123,11 +123,11 @@ jobs:
     needs: prepare-yarn-cache
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
-      - uses: actions/setup-node@v2
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
         with:
-          node-version: "*"
-      - uses: actions/cache@v2
+          node-version: "20.17.0"
+      - uses: actions/cache@v4
         with:
           path: |
             node_modules
