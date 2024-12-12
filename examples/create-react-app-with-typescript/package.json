@@ -1,14 +1,14 @@
 {
-  "name": "create-react-app-with-typescript",
+  "name": "@elyra-examples/create-react-app-with-typescript",
   "version": "0.0.0",
   "private": true,
   "dependencies": {
-    "@elyra/pipeline-editor": "../../packages/pipeline-editor",
+    "@elyra/pipeline-editor": "workspace:*",
     "react": "^18.2.0",
     "react-dom": "^18.0.9"
   },
   "devDependencies": {
-    "@types/react": "18.0.26",
+    "@types/react": "^18.3.12",
     "@types/react-dom": "^18.0.9",
     "path": "npm:path-browserify@1.0.1",
     "react-scripts": "^5.0.1",

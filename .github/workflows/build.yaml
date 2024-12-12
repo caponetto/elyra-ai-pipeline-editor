@@ -96,7 +96,7 @@ jobs:
       - name: Install
         run: yarn install
       - name: Build
-        run: yarn build
+        run: yarn build:packages
       - name: Generate coverage report
         run: yarn test:cover
       - name: Upload coverage reports to Codecov
@@ -133,7 +133,7 @@ jobs:
         with:
           node-version: ${{ matrix.node-version }}
       - name: Build
-        run: yarn build
+        run: yarn build:packages
       - name: Test
         run: yarn test
 
@@ -161,14 +161,14 @@ jobs:
       - name: Install
         run: yarn install
       - name: Build
-        run: yarn build
+        run: yarn build:packages
       - name: Cypress
         run: yarn test:cypress
         env:
           NODE_OPTIONS: --openssl-legacy-provider
 
   examples:
-    name: Build examples
+    name: Build all
     needs: prepare-yarn-cache
     runs-on: ubuntu-latest
     steps:
@@ -191,11 +191,4 @@ jobs:
       - name: Install
         run: yarn install
       - name: Build
-        run: yarn build
-      - name: Install and build examples
-        run: |
-          cd examples/create-react-app
-          yarn install && yarn build
-          cd -
-          cd  examples/create-react-app-with-typescript
-          yarn install && yarn build
+        run: yarn build:all

@@ -23,7 +23,7 @@
   },
   "dependencies": {
     "@elyra/canvas": "^12.23.2",
-    "@elyra/pipeline-services": "^1.12.1",
+    "@elyra/pipeline-services": "workspace:*",
     "@rjsf/core": "^4.2.3",
     "@rjsf/utils": "^5.0.0-beta.2",
     "@rjsf/validator-ajv6": "^5.0.0-beta.2",
@@ -45,7 +45,7 @@
     "@testing-library/react": "^16.1.0",
     "@testing-library/user-event": "^12.8.0",
     "@types/jest": "^29.2.0",
-    "@types/react": "^18.0.26",
+    "@types/react": "^18.3.12",
     "@types/react-dom": "^18.0.9",
     "@types/react-intl": "^3.0.0",
     "@types/react-redux": "^7.1.16",
